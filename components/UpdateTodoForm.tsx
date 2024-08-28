@@ -2,6 +2,7 @@
 
 import { TodoModel, useTodo } from "@/context/TodoContext";
 import { useState } from "react";
+import Spinner from "./Spinner";
 
 type props = {
   todo: TodoModel;
@@ -10,12 +11,15 @@ type props = {
 export default function UpdateTodoForm({ todo, setEditingId }: props) {
   const { updateTodo } = useTodo();
   const [newTitle, setNewTitle] = useState(todo.title);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function submitHandler(e: React.FormEvent<HTMLFormElement>) {
+    setIsSubmitting(true);
     e.preventDefault();
     updateTodo(todo.id, newTitle, todo.completed);
     setEditingId(null);
     setNewTitle("");
+    setIsSubmitting(false);
   }
 
   return (
@@ -29,12 +33,17 @@ export default function UpdateTodoForm({ todo, setEditingId }: props) {
         value={newTitle}
         onChange={(e) => setNewTitle(e.target.value)}
       />
-      <button
-        type="submit"
-        className="bg-slate-900 size-10 rounded-lg text-white hover:text-slate-400 transition-colors"
-      >
-        ثبت
-      </button>
+      {!isSubmitting ? (
+        <button
+          type="submit"
+          className="bg-slate-900 size-10 rounded-lg text-white hover:text-slate-400 transition-colors"
+          disabled={isSubmitting}
+        >
+          ثبت
+        </button>
+      ) : (
+        <Spinner />
+      )}
     </form>
   );
 }

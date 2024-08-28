@@ -21,7 +21,7 @@ export default function Page() {
       <h2 className="text-lg text-center text-slate-700 py-3">
         وب اپلیکیشن ساده برای مدیریت تسک های روزانه
       </h2>
-      <div className="bg-slate-200 rounded-lg p-4 lg:min-w-[500px] max-w-[600px]">
+      <div className="bg-slate-200 rounded-lg p-4 md:min-w-[500px] min-w-full">
         <AddTodoBox />
         <TodoList />
       </div>
